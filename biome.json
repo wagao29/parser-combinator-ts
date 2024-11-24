@@ -1,0 +1,70 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "organizeImports": {
+    "enabled": true
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "all": true,
+      "style": {
+        "useNamingConvention": "off",
+        "noNonNullAssertion": "off"
+      },
+      "suspicious": {
+        "noConsoleLog": "off"
+      },
+      "correctness": {
+        "useImportExtensions": "off"
+      }
+    }
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "ignore": [],
+    "indentStyle": "space"
+  },
+  "json": {
+    "parser": {
+      "allowComments": true
+    },
+    "formatter": {
+      "enabled": true,
+      "indentStyle": "space"
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "indentStyle": "space",
+      "trailingCommas": "none"
+    }
+  },
+
+  "overrides": [
+    {
+      "include": [
+        "*.test.ts",
+        "*.test.tsx",
+        "*.spec.ts",
+        "*.spec.tsx",
+        "**/__tests__/**"
+      ],
+      "javascript": {
+        "globals": [
+          "afterAll",
+          "afterEach",
+          "beforeAll",
+          "beforeEach",
+          "describe",
+          "expect",
+          "it",
+          "jest",
+          "test"
+        ]
+      }
+    }
+  ]
+}
