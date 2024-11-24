@@ -11,3 +11,14 @@ export const anyChar: Parser<string> = (input) => {
   }
   return { result: 'fail' };
 };
+
+export const eof: Parser<null> = (input) => {
+  if (input.length === 0) {
+    return {
+      result: 'success',
+      data: null,
+      rest: []
+    };
+  }
+  return { result: 'fail' };
+};
