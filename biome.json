@@ -9,7 +9,8 @@
       "all": true,
       "style": {
         "useNamingConvention": "off",
-        "noNonNullAssertion": "off"
+        "noNonNullAssertion": "off",
+        "useBlockStatements": "off"
       },
       "suspicious": {
         "noConsoleLog": "off"
