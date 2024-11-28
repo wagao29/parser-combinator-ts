@@ -1,7 +1,6 @@
 import type { Parser, ParserData } from './types';
 
 type NotFunc = (p: Parser<unknown>) => Parser<null>;
-
 export const not: NotFunc = (p) => (input) => {
   if (p(input).result === 'success') {
     return { result: 'fail' };
@@ -10,7 +9,6 @@ export const not: NotFunc = (p) => (input) => {
 };
 
 type OrFunc = <T>(ps: Parser<T>[]) => Parser<T>;
-
 export const or: OrFunc = (ps) => (input) => {
   for (const p of ps) {
     const r = p(input);
@@ -22,7 +20,6 @@ export const or: OrFunc = (ps) => (input) => {
 type CatFunc = <T extends Parser<unknown>[]>(
   ps: [...T]
 ) => Parser<{ [K in keyof T]: ParserData<T[K]> }>;
-
 export const cat: CatFunc = (ps) => (input) => {
   const rs = [];
   let i = input;
@@ -40,7 +37,6 @@ export const cat: CatFunc = (ps) => (input) => {
 };
 
 type RepFunc = <T>(p: Parser<T>, min?: number, max?: number) => Parser<T[]>;
-
 export const rep: RepFunc =
   (p, min = 0, max = Number.POSITIVE_INFINITY) =>
   (input) => {

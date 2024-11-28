@@ -2,8 +2,16 @@ import { char } from './char';
 import { cat, not, rep } from './combinators';
 import type { Parser } from './types';
 
-type MapFunc = <T, U>(p: Parser<T>, f: (a: T) => U) => Parser<U>;
+interface Some<T> {
+  status: 'some';
+  value: T;
+}
+interface None {
+  status: 'none';
+}
+export type Option<T> = Some<T> | None;
 
+type MapFunc = <T, U>(p: Parser<T>, f: (a: T) => U) => Parser<U>;
 export const map: MapFunc = (p, f) => (input) => {
   const r = p(input);
   if (r.result === 'fail') return r;
@@ -15,7 +23,6 @@ export const map: MapFunc = (p, f) => (input) => {
 };
 
 type StrFunc = <T extends string>(s: T) => Parser<T>;
-
 export const str: StrFunc = (s) => (input) => {
   const p = cat([...s].map(char));
   const r = p(input);
@@ -27,17 +34,7 @@ export const str: StrFunc = (s) => (input) => {
   };
 };
 
-interface Some<T> {
-  status: 'some';
-  value: T;
-}
-interface None {
-  status: 'none';
-}
-export type Option<T> = Some<T> | None;
-
 type OptFunc = <T>(p: Parser<T>) => Parser<Option<T>>;
-
 export const opt: OptFunc = (p) => (input) => {
   const r = rep(p, 0, 1)(input);
   if (r.result === 'fail') return r;
