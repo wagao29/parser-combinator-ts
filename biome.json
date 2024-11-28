@@ -13,7 +13,8 @@
         "useBlockStatements": "off"
       },
       "suspicious": {
-        "noConsoleLog": "off"
+        "noConsoleLog": "off",
+        "noEvolvingTypes": "off"
       },
       "correctness": {
         "useImportExtensions": "off"
