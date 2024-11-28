@@ -56,17 +56,23 @@ export type UpperAlphabet =
   | 'Z';
 export type LowerAlphabet = Lowercase<UpperAlphabet>;
 export type Alphabet = UpperAlphabet | LowerAlphabet;
+export type Digit = '0' | '1' | '2' | '3' | '4' | '5' | '6' | '7' | '8' | '9';
 
 const UPPER_ALPHABET_REGEX = /^[A-Z]$/;
 const LOWER_ALPHABET_REGEX = /^[a-z]$/;
 const ALPHABET_REGEX = /^[A-Za-z]$/;
+const DIGIT_REGEX = /^\d$/;
 
 export const upperAlpha: Parser<UpperAlphabet> = is((c): c is UpperAlphabet =>
   UPPER_ALPHABET_REGEX.test(c)
 );
+
 export const lowerAlpha: Parser<LowerAlphabet> = is((c): c is LowerAlphabet =>
   LOWER_ALPHABET_REGEX.test(c)
 );
+
 export const alpha: Parser<Alphabet> = is((c): c is Alphabet =>
   ALPHABET_REGEX.test(c)
 );
+
+export const digit: Parser<Digit> = is((c): c is Digit => DIGIT_REGEX.test(c));
