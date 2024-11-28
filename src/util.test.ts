@@ -1,7 +1,8 @@
+import type { Digit } from './char';
 import { char, digit } from './char';
 import type { ParserOutput } from './types';
 import type { Option } from './util';
-import { map, opt, str } from './util';
+import { diff, map, opt, str } from './util';
 
 describe('map(digit, s => Number.parseInt(s, 10))', () => {
   const parser = map(digit, (s) => Number.parseInt(s, 10));
@@ -89,6 +90,44 @@ describe('opt()', () => {
         data: { status: 'none' },
         rest: [...'b']
       });
+    });
+  });
+});
+
+describe('diff(digit, char("0"))', () => {
+  const parser = diff(digit, char('0'));
+
+  test('Empty input', () => {
+    const input = [] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit>>({
+      result: 'fail'
+    });
+  });
+
+  test('Input "a"', () => {
+    const input = [...'a'];
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit>>({
+      result: 'fail'
+    });
+  });
+
+  test('Input "0"', () => {
+    const input = [...'0'];
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit>>({
+      result: 'fail'
+    });
+  });
+
+  test('Input "5"', () => {
+    const input = [...'5'];
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Digit>>({
+      result: 'success',
+      data: '5',
+      rest: []
     });
   });
 });

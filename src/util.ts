@@ -1,5 +1,5 @@
 import { char } from './char';
-import { cat, rep } from './combinators';
+import { cat, not, rep } from './combinators';
 import type { Parser } from './types';
 
 type MapFunc = <T, U>(p: Parser<T>, f: (a: T) => U) => Parser<U>;
@@ -50,3 +50,6 @@ export const opt: OptFunc = (p) => (input) => {
     rest: r.rest
   };
 };
+
+type DiffFunc = <T, U>(p: Parser<T>, q: Parser<U>) => Parser<T>;
+export const diff: DiffFunc = (p, q) => map(cat([not(q), p]), ([, r]) => r);
