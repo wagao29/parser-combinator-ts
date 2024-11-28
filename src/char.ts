@@ -26,3 +26,47 @@ export const is: IsFunc = (f) => (input) => {
     rest: r.rest
   };
 };
+
+export type UpperAlphabet =
+  | 'A'
+  | 'B'
+  | 'C'
+  | 'D'
+  | 'E'
+  | 'F'
+  | 'G'
+  | 'H'
+  | 'I'
+  | 'J'
+  | 'K'
+  | 'L'
+  | 'M'
+  | 'N'
+  | 'O'
+  | 'P'
+  | 'Q'
+  | 'R'
+  | 'S'
+  | 'T'
+  | 'U'
+  | 'V'
+  | 'W'
+  | 'X'
+  | 'Y'
+  | 'Z';
+export type LowerAlphabet = Lowercase<UpperAlphabet>;
+export type Alphabet = UpperAlphabet | LowerAlphabet;
+
+const UPPER_ALPHABET_REGEX = /^[A-Z]$/;
+const LOWER_ALPHABET_REGEX = /^[a-z]$/;
+const ALPHABET_REGEX = /^[A-Za-z]$/;
+
+export const upperAlpha: Parser<UpperAlphabet> = is((c): c is UpperAlphabet =>
+  UPPER_ALPHABET_REGEX.test(c)
+);
+export const lowerAlpha: Parser<LowerAlphabet> = is((c): c is LowerAlphabet =>
+  LOWER_ALPHABET_REGEX.test(c)
+);
+export const alpha: Parser<Alphabet> = is((c): c is Alphabet =>
+  ALPHABET_REGEX.test(c)
+);
