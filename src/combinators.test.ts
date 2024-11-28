@@ -1,5 +1,5 @@
 import { char } from './char';
-import { not, or } from './combinators';
+import { cat, not, or } from './combinators';
 
 import type { ParserOutput } from './types';
 
@@ -101,6 +101,70 @@ describe('or()', () => {
       const input = [...'A'];
       const output = parser(input);
       expect(output).toEqual<ParserOutput<'a' | 'b'>>({
+        result: 'fail'
+      });
+    });
+  });
+});
+
+describe('cat()', () => {
+  describe('cat([])', () => {
+    const parser = cat([]);
+
+    test('Empty input', () => {
+      const input = [] as const;
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<[]>>({
+        result: 'success',
+        data: [],
+        rest: []
+      });
+    });
+
+    test('Input "a"', () => {
+      const input = [...'a'];
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<[]>>({
+        result: 'success',
+        data: [],
+        rest: [...'a']
+      });
+    });
+  });
+
+  describe('cat([char("a"), char("b")])', () => {
+    const parser = cat([char('a'), char('b')]);
+
+    test('Empty input', () => {
+      const input = [] as const;
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<['a', 'b']>>({
+        result: 'fail'
+      });
+    });
+
+    test('Input "a"', () => {
+      const input = [...'a'];
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<['a', 'b']>>({
+        result: 'fail'
+      });
+    });
+
+    test('Input "abc"', () => {
+      const input = [...'abc'];
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<['a', 'b']>>({
+        result: 'success',
+        data: ['a', 'b'],
+        rest: [...'c']
+      });
+    });
+
+    test('Input "A"', () => {
+      const input = [...'A'];
+      const output = parser(input);
+      expect(output).toEqual<ParserOutput<['a', 'b']>>({
         result: 'fail'
       });
     });
