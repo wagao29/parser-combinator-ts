@@ -1,3 +1,7 @@
+// <non-zero-digit> ::= "1" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9"
+//          <digit> ::= "0" | <non-zero-digit>
+//         <number> ::= "0" | <non-zero-digit> <digit>*
+
 import type { Digit } from '../char';
 import { char, digit } from '../char';
 import { cat, or, rep } from '../combinators';
@@ -13,7 +17,7 @@ const nonZeroNumber: Parser<number> = map(
   ([first, rest]) => Number.parseInt([first, ...rest].join(''), 10)
 );
 
-const numbers: Parser<number> = or([zeroNumber, nonZeroNumber]);
+export const numbers: Parser<number> = or([zeroNumber, nonZeroNumber]);
 
 const sign: Parser<1 | -1> = map(opt(or([char('+'), char('-')])), (s) =>
   s.status === 'some' ? (s.value === '+' ? 1 : -1) : 1
