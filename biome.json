@@ -18,6 +18,9 @@
       },
       "correctness": {
         "useImportExtensions": "off"
+      },
+      "performance": {
+        "noAccumulatingSpread": "off"
       }
     }
   },
