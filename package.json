@@ -1,5 +1,5 @@
 {
-  "name": "parser-combinator",
+  "name": "parser-combinator-ts",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
@@ -8,9 +8,7 @@
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "node",
-    "testPathIgnorePatterns": [
-      "<rootDir>/dist/"
-    ]
+    "testPathIgnorePatterns": ["<rootDir>/dist/"]
   },
   "keywords": [],
   "author": "",
