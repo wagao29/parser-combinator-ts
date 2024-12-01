@@ -7,7 +7,14 @@ import { number } from './number';
 import { string } from './string';
 import { whitespace } from './whitespace';
 
-export type ValueType = string | number | boolean | null | ValueType[];
+export type ValueType =
+  | string
+  | number
+  | boolean
+  | null
+  | ValueType[]
+  | ObjectType;
+export type ObjectType = { [key: string]: ValueType };
 
 const parseNull: Parser<null> = map(str('null'), () => null);
 
@@ -16,7 +23,8 @@ const valueContent: Parser<ValueType> = or<ValueType>([
   number,
   bool,
   parseNull,
-  array
+  array,
+  object
 ]);
 
 export function value(input: ParserInput): ParserOutput<ValueType> {
@@ -30,4 +38,18 @@ const arrayContent: Parser<ValueType[]> = map(
 
 export function array(input: ParserInput): ParserOutput<ValueType[]> {
   return map(cat([char('['), arrayContent, char(']')]), ([, a]) => a)(input);
+}
+
+const objectKeyValue: Parser<ObjectType> = map(
+  cat([whitespace, string, whitespace, char(':'), value]),
+  ([, k, , , v]) => ({ [k]: v })
+);
+
+const objectContent: Parser<ObjectType> = map(
+  or([list(objectKeyValue, char(',')), whitespace]),
+  (a) => (a ?? []).reduce((obj, kv) => ({ ...obj, ...kv }), {})
+);
+
+export function object(input: ParserInput): ParserOutput<ObjectType> {
+  return map(cat([char('{'), objectContent, char('}')]), ([, o]) => o)(input);
 }
