@@ -20,7 +20,8 @@
         "useImportExtensions": "off"
       },
       "performance": {
-        "noAccumulatingSpread": "off"
+        "noAccumulatingSpread": "off",
+        "noBarrelFile": "off"
       }
     }
   },
