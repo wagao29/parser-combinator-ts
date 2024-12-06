@@ -2,7 +2,7 @@ import { char } from '../../char';
 import { cat, or } from '../../combinators';
 import type { Parser, ParserInput, ParserOutput } from '../../types';
 import { list, map, str } from '../../util';
-import { bool } from '../bool';
+import { bool } from './bool';
 import { number } from './number';
 import { string } from './string';
 import { whitespace } from './whitespace';

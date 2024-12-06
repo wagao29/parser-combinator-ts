@@ -1,4 +1,4 @@
-import type { ParserOutput } from '../types';
+import type { ParserOutput } from '../../types';
 import { bool } from './bool';
 
 describe('bool', () => {
