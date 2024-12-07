@@ -22,6 +22,12 @@
       "performance": {
         "noAccumulatingSpread": "off",
         "noBarrelFile": "off"
+      },
+      "complexity": {
+        "noExcessiveCognitiveComplexity": {
+          "level": "warn",
+          "options": { "maxAllowedComplexity": 20 }
+        }
       }
     }
   },
