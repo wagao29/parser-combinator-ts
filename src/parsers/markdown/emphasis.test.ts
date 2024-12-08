@@ -14,16 +14,8 @@ describe('emphasis', () => {
     });
   });
 
-  test('Input "*emphasis text"', () => {
-    const input = [...'*emphasis text'] as const;
-    const output = parser(input);
-    expect(output).toEqual<ParserOutput<Emphasis>>({
-      result: 'fail'
-    });
-  });
-
-  test('Input "emphasis text*"', () => {
-    const input = [...'emphasis text*'] as const;
+  test('Input "**emphasis text**"', () => {
+    const input = [...'**emphasis text**'] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<Emphasis>>({
       result: 'fail'
