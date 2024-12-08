@@ -9,7 +9,7 @@ describe('heading', () => {
   test('Empty input', () => {
     const input = [] as const;
     const output = parser(input);
-    expect(output).toEqual<ParserOutput<number>>({
+    expect(output).toEqual<ParserOutput<Heading>>({
       result: 'fail'
     });
   });
@@ -17,7 +17,7 @@ describe('heading', () => {
   test('Input "#Heading 1"', () => {
     const input = [] as const;
     const output = parser(input);
-    expect(output).toEqual<ParserOutput<number>>({
+    expect(output).toEqual<ParserOutput<Heading>>({
       result: 'fail'
     });
   });
