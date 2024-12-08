@@ -10,7 +10,7 @@ export function strong(input: ParserInput): ParserOutput<Strong> {
   return map(
     cat([
       rep(char('*'), 2, 2, true),
-      rep(diff(anyChar, char('*'))),
+      rep(diff(anyChar, char('*')), 1),
       rep(char('*'), 2, 2, true)
     ]),
     ([, v]) => {
