@@ -41,6 +41,25 @@ describe('heading', () => {
     });
   });
 
+  test('Input "   # Heading with whitespace   "', () => {
+    const input = [...'   # Heading with whitespace   '] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Heading>>({
+      result: 'success',
+      data: {
+        type: 'heading',
+        depth: 1,
+        children: [
+          {
+            type: 'text',
+            value: 'Heading with whitespace'
+          }
+        ]
+      },
+      rest: []
+    });
+  });
+
   test('Input "##   Heading 2"', () => {
     const input = [...'##   Heading 2'] as const;
     const output = parser(input);
