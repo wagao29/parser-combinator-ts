@@ -46,4 +46,22 @@ describe('strong', () => {
       rest: []
     });
   });
+
+  test('Input "   **strong with whitespace**   "', () => {
+    const input = [...'   **strong with whitespace**   '] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Strong>>({
+      result: 'success',
+      data: {
+        type: 'strong',
+        children: [
+          {
+            type: 'text',
+            value: 'strong with whitespace'
+          }
+        ]
+      },
+      rest: []
+    });
+  });
 });
