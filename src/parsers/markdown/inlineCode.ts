@@ -16,7 +16,7 @@ export const inlineCode: Parser<InlineCode> = map(
   ([, , v]) => {
     const inlineCode: InlineCode = {
       type: 'inlineCode',
-      value: v.join('').trim()
+      value: v.join('')
     };
     return inlineCode;
   }
