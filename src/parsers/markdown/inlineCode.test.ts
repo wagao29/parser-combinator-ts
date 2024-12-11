@@ -42,4 +42,17 @@ describe('inlineCode', () => {
       rest: []
     });
   });
+
+  test('Input "   `inline code with whitespace`   "', () => {
+    const input = [...'   `inline code with whitespace`   '] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<InlineCode>>({
+      result: 'success',
+      data: {
+        type: 'inlineCode',
+        value: 'inline code with whitespace'
+      },
+      rest: []
+    });
+  });
 });
