@@ -39,4 +39,22 @@ describe('emphasis', () => {
       rest: []
     });
   });
+
+  test('Input "   *emphasis with whitespace*   ', () => {
+    const input = [...'   *emphasis with whitespace*   '] as const;
+    const output = parser(input);
+    expect(output).toEqual<ParserOutput<Emphasis>>({
+      result: 'success',
+      data: {
+        type: 'emphasis',
+        children: [
+          {
+            type: 'text',
+            value: 'emphasis with whitespace'
+          }
+        ]
+      },
+      rest: []
+    });
+  });
 });
