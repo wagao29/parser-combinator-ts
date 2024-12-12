@@ -4,6 +4,7 @@ import { cat, rep } from '../../combinators';
 import { anyChar } from '../../primitives';
 import type { Parser } from '../../types';
 import { diff, map } from '../../util';
+import { lineEnd } from './lineEnd';
 
 // TODO: Supports types other than text for children
 export const heading: Parser<Heading> = map(
@@ -11,7 +12,7 @@ export const heading: Parser<Heading> = map(
     rep(char(' ')),
     rep(char('#'), 1, 6, true),
     rep(char(' ')),
-    rep(diff(anyChar, char('\n')))
+    rep(diff(anyChar, lineEnd))
   ]),
   ([, s, , v]) => {
     const heading: Heading = {
