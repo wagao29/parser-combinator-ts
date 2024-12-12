@@ -1,5 +1,4 @@
 import type { Root } from 'mdast';
-
 import { markdown } from '.';
 import type { ParserOutput } from '../../types';
 
@@ -22,11 +21,13 @@ describe('markdown', () => {
   test('Input multiline markdown', () => {
     const md = `# Heading 1
 
-\`inline code\`
+    normal text
 
-**emphasis text**
+    \`inline code\`
 
-*strong text*`;
+    **emphasis text**
+
+    *strong text*`;
     const input = [...md] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<Root>>({
@@ -41,6 +42,15 @@ describe('markdown', () => {
               {
                 type: 'text',
                 value: 'Heading 1'
+              }
+            ]
+          },
+          {
+            type: 'paragraph',
+            children: [
+              {
+                type: 'text',
+                value: 'normal text'
               }
             ]
           },

@@ -1,15 +1,34 @@
-import type { Paragraph, PhrasingContent, Root, TopLevelContent } from 'mdast';
-import { or, rep } from '../../combinators';
+import type {
+  Paragraph,
+  PhrasingContent,
+  Root,
+  Text,
+  TopLevelContent
+} from 'mdast';
+import { char } from '../../char';
+import { cat, or, rep } from '../../combinators';
+import { anyChar } from '../../primitives';
 import type { Parser } from '../../types';
-import { list, map, opt } from '../../util';
+import { diff, list, map, opt } from '../../util';
 import { emphasis } from './emphasis';
 import { heading } from './heading';
 import { inlineCode } from './inlineCode';
 import { lineEnd } from './lineEnd';
 import { strong } from './strong';
 
+const text: Parser<Text> = map(
+  cat([rep(char(' ')), rep(diff(anyChar, lineEnd), 1)]),
+  ([, v]) => {
+    const text: Text = {
+      type: 'text',
+      value: v.join('').trim()
+    };
+    return text;
+  }
+);
+
 const paragraph: Parser<Paragraph> = map(
-  rep(or<PhrasingContent>([inlineCode, emphasis, strong]), 1),
+  rep(or<PhrasingContent>([inlineCode, emphasis, strong, text]), 1),
   (v) => {
     const paragraph: Paragraph = {
       type: 'paragraph',
