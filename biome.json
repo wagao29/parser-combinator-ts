@@ -17,11 +17,13 @@
         "noEvolvingTypes": "off"
       },
       "correctness": {
-        "useImportExtensions": "off"
+        "useImportExtensions": "off",
+        "noNodejsModules": "off"
       },
       "performance": {
         "noAccumulatingSpread": "off",
-        "noBarrelFile": "off"
+        "noBarrelFile": "off",
+        "noDelete": "off"
       },
       "complexity": {
         "noExcessiveCognitiveComplexity": {

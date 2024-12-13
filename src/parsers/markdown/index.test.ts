@@ -1,4 +1,7 @@
 import type { Root } from 'mdast';
+import { fromMarkdown } from 'mdast-util-from-markdown';
+import fs from 'node:fs';
+import { visit } from 'unist-util-visit';
 import { markdown } from '.';
 import type { ParserOutput } from '../../types';
 
@@ -19,80 +22,15 @@ describe('markdown', () => {
   });
 
   test('Input multiline markdown', () => {
-    const md = `# Heading 1
+    const md = fs.readFileSync('fixtures/test.md', 'utf-8');
+    const tree = fromMarkdown(md);
+    visit(tree, (node) => delete node.position);
 
-    normal text
-
-    \`inline code\`
-
-    **emphasis text**
-
-    *strong text*`;
     const input = [...md] as const;
     const output = parser(input);
     expect(output).toEqual<ParserOutput<Root>>({
       result: 'success',
-      data: {
-        type: 'root',
-        children: [
-          {
-            type: 'heading',
-            depth: 1,
-            children: [
-              {
-                type: 'text',
-                value: 'Heading 1'
-              }
-            ]
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'text',
-                value: 'normal text'
-              }
-            ]
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'inlineCode',
-                value: 'inline code'
-              }
-            ]
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'strong',
-                children: [
-                  {
-                    type: 'text',
-                    value: 'emphasis text'
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            type: 'paragraph',
-            children: [
-              {
-                type: 'emphasis',
-                children: [
-                  {
-                    type: 'text',
-                    value: 'strong text'
-                  }
-                ]
-              }
-            ]
-          }
-        ]
-      },
+      data: tree,
       rest: []
     });
   });
